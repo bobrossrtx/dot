@@ -5,13 +5,10 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-PATH=$HOME/bin:/usr/local/bin:$PATH
-PATH=$HOME/.local/bin:$PATH
-PATH=$HOME/go/bin:$PATH
-export PATH
-export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
+source $HOME/.zsh/env.zsh
+source $HOME/.zsh/exports.zsh
 
 # Plugins
 
@@ -104,6 +101,7 @@ alias reset="cd ~; clear; source ~/.zshrc"
 alias fetch="clear && neofetch"
 alias todo="bat ~/Dropbox/Notes/todo.md"
 alias todoe="nvim ~/Dropbox/Notes/todo.md"
+alias config="dotbare"
 
 # ptSH
 alias pwd="ptpwd"
@@ -168,11 +166,6 @@ SAVEHIST=100000
 WORDCHARS='`~!@#$%^&*()-_=+[{]}\|;:",<.>/?'"'"
 watch=(notme)
 
-export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-export ARCHFLAGS="-arch x86_64"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 ## Terminal Emulator
 # get terminal emulator
