@@ -92,12 +92,12 @@ alias weather="clear && curl wttr.in"
 alias v="nvim"
 alias vim="v"
 alias f="ranger"
+alias fa="f --cmd \"set show_hidden=true\""
 alias tty="tty-clock -C6 -c -t"
 alias pack="sudo apt-get"
 alias commit="git add -A; git commit"
 alias shot="flameshot gui"
 alias kill="killall -q"
-alias br="broot -sdp"
 
 # Terminal maintenance
 alias reset="cd ~; clear; source ~/.zshrc"
@@ -110,6 +110,8 @@ alias config="dotbare"
 alias pwd="ptpwd"
 alias mkdir="ptmkdir -p"
 alias touch="pttouch"
+alias rm="ptrm"
+alias cp="ptcp"
 
 # Directory management
 alias ls="exa --time-style=long-iso"
@@ -138,7 +140,7 @@ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # Helpers
 alias ccat="highlight -O ansi"
-alias rm="rm -v"
+# alias rm="rm -v"
 
 # Command adaptations
 alias grep="$(whence -p grep) --color=auto"
@@ -177,7 +179,6 @@ TERM_EMULATOR=$(ps -h -o comm -p $PPID)
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source $HOME/.config/broot/launcher/bash/br
 source $HOME/.cargo/env
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

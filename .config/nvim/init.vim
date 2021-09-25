@@ -57,6 +57,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'dense-analysis/ale'
 Plug 'frazrepo/vim-rainbow'
 Plug 'preservim/nerdcommenter'
+Plug 'francoiscabrol/ranger.vim' | Plug 'rbgrouleff/bclose.vim'
 call plug#end()
 
 " nerdcommenter
@@ -183,8 +184,15 @@ nnoremap <Up> <nop>
 nnoremap <Down> <nop>
 nnoremap <Left> <nop>
 nnoremap <Right> <nop>
-"
-" nmap <F8> :TagbarToggle<CR>
+
+nnoremap <leader><C-f> :RangerNewTab<CR>
+
+" Nerdtree/ranger settings
+let g:NERDTreeHijackNetrw = 0
+
+let g:ranger_map_keys = 0
+let g:ranger_replace_netrw = 1
+let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " FZF settings
 let g:fzf_action = {
