@@ -78,6 +78,9 @@ zstyle ":completion:*" matcher-list \
 zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 
 ## Aliases
+alias e="$EDITOR"
+alias v="$VISUAL"
+
 alias w="feh --bg-fill --randomize ~/Pictures/wallpapers"
 alias wr="nitrogen --restore"
 alias battery="acpi -b"
@@ -105,7 +108,7 @@ alias config="dotbare"
 
 # ptSH
 alias pwd="ptpwd"
-alias mkdir="ptmkdir"
+alias mkdir="ptmkdir -p"
 alias touch="pttouch"
 
 # Directory management
