@@ -4,19 +4,28 @@ lua require("bobrossrtx")
 set encoding=UTF-8 nobackup nowritebackup nocursorline
 set splitright splitbelow
 set shiftwidth=4 autoindent smartindent tabstop=4 softtabstop=4 expandtab nowrap
+set backspace=indent,eol,start
 set exrc
 set guicursor=
 set relativenumber
 set number
-set nohlsearch
 set hidden
+set ruler
 set noerrorbells
 set noswapfile
 set undodir=~/.vim/undodir undofile
+set ttyfast
+set lazyredraw
+set nohlsearch
 set incsearch
+set smartcase
+set ignorecase
+set showmatch
 set termguicolors
 set scrolloff=8
 set noshowmode
+set showmode
+set showcmd
 set completeopt=menuone,noinsert,noselect
 au BufRead,BufNewFile *.fountain set filetype=fountain
 
@@ -100,10 +109,6 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 end
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -155,7 +160,30 @@ nnoremap <C-g> :Ag<CR>
 nnoremap <leader>f :FZF<CR>
 nnoremap <leader><C-g> :Commits<CR>
 
-vnoremap J :move '>+1<CR>gv=gv
+nnoremap <leader>1 :BufferLineGoToBuffer 1<CR>
+nnoremap <leader>2 :BufferLineGoToBuffer 2<CR>
+nnoremap <leader>3 :BufferLineGoToBuffer 3<CR>
+nnoremap <leader>4 :BufferLineGoToBuffer 4<CR>
+nnoremap <leader>5 :BufferLineGoToBuffer 5<CR>
+nnoremap <leader>6 :BufferLineGoToBuffer 6<CR>
+nnoremap <leader>7 :BufferLineGoToBuffer 7<CR>
+nnoremap <leader>8 :BufferLineGoToBuffer 8<CR>
+nnoremap <leader>9 :BufferLineGoToBuffer 9<CR>
+
+nnoremap <leader>p :bprev<CR>
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>q :wq<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>e :e<CR>
+
+nnoremap / /\v
+vnoremap / /\v
+map <leader><C-s> :let @/=''<CR>
+
+nnoremap j gj
+nnoremap k gk
+noremap J :move '>+1<CR>gv=gv
 vnoremap K :move '<-2<CR>gv=gv
 inoremap <C-j> <esc>:move .+1<CR>==
 inoremap <C-k> <esc>:move .-2<CR>==
