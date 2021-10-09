@@ -1,0 +1,25 @@
+# Don't add a newline at the start of the prompt
+add_newline = false
+
+# Make prompt a single line instead of two lines
+[line_break]
+disabled = true
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                         # The name of the module we are configuring is "character"
+success_symbol = "[➜](bold green)"  # The "success_symbol" is set to "➜" with color "bold green"
+error_symbol = "[➜](bold red)"      # The "error_symbol" is set to "➜" with color "bold red"
+vicmd_symbol = "[V](bold green) "
+
+[git_status]
+ahead = ">"
+behind = "<"
+diverged = "<>"
+renamed = "r"
+deleted = "x"
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+

@@ -2,10 +2,10 @@
 # - Author: Owen Boreham
 # - Date:   Mon, 13th September
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 source $HOME/.zsh/env.zsh
 source $HOME/.zsh/exports.zsh
@@ -78,8 +78,17 @@ zstyle ":completion:*" matcher-list \
 zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 
 ## Aliases
-alias e="$EDITOR"
-alias v="$VISUAL"
+alias edit="$EDITOR"
+alias visual="$VISUAL"
+
+alias v="nvim"
+alias vim="v"
+alias em="emacs -nw"
+alias emacs="emacsclient -c -a 'emacs'"
+alias doomsync="~/.emacs.d/bin/doom sync"
+alias doomdoctor="~/.emacs.d/bin/doom doctor"
+alias doomupgrade="~/.emacs.d/bin/doom upgrade"
+alias doompurge="~/.emacs.d/bin/doom purge"
 
 alias w="feh --bg-fill --randomize ~/Pictures/wallpapers"
 alias wr="nitrogen --restore"
@@ -89,8 +98,6 @@ alias frick="fuck"
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias weather="clear && curl wttr.in"
-alias v="nvim"
-alias vim="v"
 alias f="ranger"
 alias fa="f --cmd \"set show_hidden=true\""
 alias tty="tty-clock -C6 -c -t"
@@ -105,20 +112,54 @@ alias fetch="clear && neofetch"
 alias todo="bat ~/Dropbox/Notes/todo.md"
 alias todoe="nvim ~/Dropbox/Notes/todo.md"
 alias config="dotbare"
+alias jctl="journalctl -p 3 -xb"
+alias cp="cp -i"
+alias mv='mv -i'
+alias rm='rm -i'
 
-# ptSH
-alias pwd="ptpwd"
-alias mkdir="ptmkdir -p"
-alias touch="pttouch"
-alias rm="ptrm"
-alias cp="ptcp"
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias psa="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+alias psmem='ps auxf | sort -nr -k 4'
+alias pscpu='ps auxf | sort -nr -k 3'
+
+# git
+alias addup='git add -u'
+alias addall='git add .'
+alias branch='git branch'
+alias checkout='git checkout'
+alias clone='git clone'
+alias commit='git commit -m'
+alias fetch='git fetch'
+alias pull='git pull origin'
+alias push='git push origin'
+alias stat='git status'  # 'status' is protected name so using 'stat' instead
+alias tag='git tag'
+alias newtag='git tag -a'
+
+# switch between shells
+# I do not recommend switching default SHELL from bash.
+alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
+alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
+alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
+
+# termbin
+alias tb="nc termbin.com 9999"
+alias termbin="tb"
+
+# the terminal rickroll
+alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
 # Directory management
-alias ls="exa --time-style=long-iso"
-alias lah="ls -lah"
-alias la="ls -a"
-alias ll="ls -l"
-alias lal="ls -al"
+# Changing "ls" to "exa"
+alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -l --color=always --group-directories-first'  # long format
+alias l.='exa -a | egrep "^\."'
+
 alias d="dirs -v"
 alias 1="pu"
 alias 2="pu -2"
@@ -182,3 +223,7 @@ TERM_EMULATOR=$(ps -h -o comm -p $PPID)
 source $HOME/.cargo/env
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# opam configuration
+test -r /home/owen/.opam/opam-init/init.zsh && . /home/owen/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+eval "$(starship init zsh)"

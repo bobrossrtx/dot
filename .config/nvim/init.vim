@@ -1,4 +1,5 @@
-lua require("bobrossrtx")
+lua require 'bobrossrtx'
+source $HOME/.config/nvim/plug-config/start-screen.vim
 
 " General Settings
 set encoding=UTF-8 nobackup nowritebackup nocursorline
@@ -27,7 +28,6 @@ set noshowmode
 set showmode
 set showcmd
 set completeopt=menuone,noinsert,noselect
-au BufRead,BufNewFile *.fountain set filetype=fountain
 
 fun! GitBranch()
     return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
@@ -45,28 +45,53 @@ set shortmess+=c
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'nvim-lua/plenary.nvim' | Plug 'nvim-telescope/telescope.nvim'
+" {{ Theme }}
 Plug 'gruvbox-community/gruvbox'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+
+" {{ File Management }}
+Plug 'vifm/vifm.vim'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'francoiscabrol/ranger.vim' | Plug 'rbgrouleff/bclose.vim'
+
+" {{ Telescope & requirements }}
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'simrat39/symbols-outline.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} | Plug 'nvim-treesitter/playground'
+
+" {{ Tree sitter }}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
+" {{ Productivity }}
+Plug 'mhinz/vim-startify'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/goyo.vim' | Plug 'junegunn/limelight.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } | Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-scripts/fountain.vim' | Plug 'tpope/vim-markdown' | Plug 'ap/vim-css-color'
 Plug 'itchyny/vim-gitbranch'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/tagbar'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-ctrlspace/vim-ctrlspace'
-Plug 'preservim/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdcommenter'
+Plug 'ackyshake/VimCompletesMe'
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'tpope/vim-surround'
+Plug 'vimwiki/vimwiki'
+Plug 'jreybert/vimagit'
+
+" {{ Fun Stuff }}
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'vim-scripts/fountain.vim' | Plug 'tpope/vim-markdown' | Plug 'ap/vim-css-color'
 Plug 'voldikss/vim-floaterm'
 Plug 'dense-analysis/ale'
 Plug 'frazrepo/vim-rainbow'
-Plug 'preservim/nerdcommenter'
-Plug 'francoiscabrol/ranger.vim' | Plug 'rbgrouleff/bclose.vim'
+Plug 'PotatoesMaster/i3-vim-syntax'
+
 call plug#end()
 
 " nerdcommenter
@@ -97,6 +122,15 @@ let g:rainbow_load_separately = [
 
 let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
 let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+" Language Server
+ let g:LanguageClient_serverCommands = {
+    \   'ocaml':           ['ocamllsp'],
+    \}
+
+" Opam - Ocaml
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 
 " Airline config
 let g:airline_powerline_fonts = 1
@@ -177,9 +211,17 @@ nnoremap <leader>q :wq<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>e :e<CR>
 
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 nnoremap / /\v
 vnoremap / /\v
 map <leader><C-s> :let @/=''<CR>
+
+nnoremap <leader>/ :Commentary<CR>
+vnoremap <leader>/ :Commentary<CR>
 
 nnoremap j gj
 nnoremap k gk
@@ -213,9 +255,15 @@ nnoremap <Down> <nop>
 nnoremap <Left> <nop>
 nnoremap <Right> <nop>
 
+map <leader>vv :Vifm<CR>
+map <leader>vs :VSplitVifm<CR>
+map <leader>sp :SplitVifm<CR>
+map <leader>dv :DiffVifm<CR>
+map <leader>tv :TabVifm<CR>
+
 nnoremap <leader><C-f> :RangerNewTab<CR>
 
-" Nerdtree/ranger settings
+" Nerdtree/ranger/vifm settings
 let g:NERDTreeHijackNetrw = 0
 
 let g:ranger_map_keys = 0

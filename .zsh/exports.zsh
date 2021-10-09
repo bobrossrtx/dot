@@ -1,8 +1,11 @@
 # Path
 PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
+PATH=$HOME/.local/bin/color-scripts:$PATH
+PATH=$HOME/.local/bin/TinyKernel-Toolchain/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.bin:$PATH
+PATH=$HOME/.emacs.d/bin:$PATH
 
 export PATH
 
@@ -21,3 +24,10 @@ export DOTBARE_TREE="$HOME"
 # Editor
 export VISUAL=nvim
 export EDITOR=$VISUAL
+
+# NNN
+NNN_PLUG_INLINE='e:!go run $nnn*'
+NNN_PLUG_DEFAULT='1:ipinfo;b:nbak'
+NNN_PLUG_GENERAL='f:finder;o:fzopen;p:mocplay;d:diffs;t:nmount;v:imgview'
+export NNN_PLUG="$NNN_PLUG_DEFAULT;$NNN_PLUG_GENERAL;$NNN_PLUG_INLINE"
+
