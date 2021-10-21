@@ -44,7 +44,7 @@ floating_modifier $mod
 bindsym $mod+Return exec terminator
 
 # start a browser
-bindsym $mod+b exec chromium
+bindsym $mod+b exec brave-browser-stable
 
 # kill focused window
 bindsym $mod+q kill
@@ -174,7 +174,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     status_command  $HOME/.local/bin/bumblebee-status \
-        -m git cpu memory disk battery time bluetooth2 pasink pasource \
+        -m git cpu memory disk bluetooth2 pasink pasource battery time \
         -p time.format="%H:%M" -t dracula-powerline
     position top
     colors {

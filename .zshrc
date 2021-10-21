@@ -81,6 +81,7 @@ zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 alias edit="$EDITOR"
 alias visual="$VISUAL"
 
+alias j="z"
 alias v="nvim"
 alias vim="v"
 alias em="emacs -nw"
@@ -93,7 +94,6 @@ alias doompurge="~/.emacs.d/bin/doom purge"
 alias w="feh --bg-fill --randomize ~/Pictures/wallpapers"
 alias wr="nitrogen --restore"
 alias battery="acpi -b"
-alias cls="clear"
 alias frick="fuck"
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
@@ -105,6 +105,12 @@ alias pack="sudo apt-get"
 alias commit="git add -A; git commit"
 alias shot="flameshot gui"
 alias kill="killall -q"
+
+alias cls="clear"
+alias c='clear && echo "" && pwd && ls'
+alias clera='clear'
+alias clea='clear'
+alias chmox='chmod +x'
 
 # Terminal maintenance
 alias reset="cd ~; clear; source ~/.zshrc"
@@ -155,10 +161,10 @@ alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/mas
 
 # Directory management
 # Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -l --color=always --group-directories-first'  # long format
-alias l.='exa -a | egrep "^\."'
+alias ls='lsd -al' # my preferred listing
+alias la='lsd -a'  # all files and dirs
+alias ll='lsd -l'  # long format
+alias l.='lsd -a | egrep "^\."'
 
 alias d="dirs -v"
 alias 1="pu"

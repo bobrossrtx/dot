@@ -6,8 +6,9 @@ set encoding=UTF-8 nobackup nowritebackup nocursorline
 set splitright splitbelow
 set shiftwidth=4 autoindent smartindent tabstop=4 softtabstop=4 expandtab nowrap
 set backspace=indent,eol,start
-set exrc
+set mouse=a
 set guicursor=
+set exrc
 set relativenumber
 set number
 set hidden
@@ -28,6 +29,7 @@ set noshowmode
 set showmode
 set showcmd
 set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 fun! GitBranch()
     return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
@@ -43,7 +45,7 @@ set updatetime=50
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" Plugins
+" Plugins - Vim Plug
 call plug#begin('~/.vim/plugged')
 " {{ Theme }}
 Plug 'gruvbox-community/gruvbox'
@@ -57,6 +59,7 @@ Plug 'francoiscabrol/ranger.vim' | Plug 'rbgrouleff/bclose.vim'
 
 " {{ Telescope & requirements }}
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 
@@ -64,7 +67,21 @@ Plug 'simrat39/symbols-outline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
+" {{ Snippets }}
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'ackyshake/VimCompletesMe'
+
+" {{ Language Server }}
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'neovim/nvim-lspconfig'
+
 " {{ Productivity }}
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(69) } }
+Plug 'alok/notational-fzf-vim'
+Plug 'jbyuki/venn.nvim'
+Plug 'nvim-lua/completion-nvim'
 Plug 'mhinz/vim-startify'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
@@ -78,21 +95,42 @@ Plug 'vim-syntastic/syntastic'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdcommenter'
-Plug 'ackyshake/VimCompletesMe'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'tpope/vim-surround'
 Plug 'vimwiki/vimwiki'
 Plug 'jreybert/vimagit'
+Plug 'alexpearce/nvim-follow-markdown-links', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'ggandor/lightspeed.nvim'
+Plug 'tjdevries/train.nvim'
 
 " {{ Fun Stuff }}
+Plug 'andweeb/presence.nvim'
+Plug 'ThePrimeagen/vim-be-good'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'vim-scripts/fountain.vim' | Plug 'tpope/vim-markdown' | Plug 'ap/vim-css-color'
 Plug 'voldikss/vim-floaterm'
 Plug 'dense-analysis/ale'
 Plug 'frazrepo/vim-rainbow'
 Plug 'PotatoesMaster/i3-vim-syntax'
-
 call plug#end()
+
+" Plugins - Vundle
+set nocompatible
+filetype off
+
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#begin('~/.vim/plugged')
+" Let vundle manage itself
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'prashanthellina/follow-markdown-links'
+call vundle#end()
+filetype plugin indent on
+
+" fzf notes
+let g:nv_search_paths = ['~/notes']
+
 
 " nerdcommenter
 let g:NERDCreateDefaultMappings = 1
@@ -104,13 +142,70 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
+" UltiSnips
+let g:UltiSnipsExpandTrigger='<tab>'
+let g:UltiSnipsExpandTrigger='<c-j>'
+let g:UltiSnipsJumpForwardTrigger='<c-b>'
+let g:UltiSnipsJumpBackwardTrigger='<c-z>'
+let g:UltiSnipsEditSplit='vertical'
+
+" Vimwiki
+let g:vimwiki_list = [
+    \ {
+    \   'path': '~/vimwiki/',
+    \   'syntax': 'markdown',
+    \   'ext': '.md'
+    \ }]
+
 " Ale config
 let g:ale_fixers = {
     \   '*': ['remove_trailing_lines', 'trim_whitespace'],
     \   'javascript': ['eslint']}
 let g:ale_completion_autoimport = 1
 
-" Vim rainbow
+" venn
+lua <<EOF
+    -- enable or disable keymappings for venn
+    function _G.toggle_venn()
+        local venn_enabled = vim.inspect(vim.b.venn_enabled)
+        if(venn_enabled == "nil") then
+            vim.b.venn_enabled = true
+            vim.cmd[[setlocal ve=all]]
+            -- draw a line on HJKL keystokes
+            vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<cr>", {noremap = true})
+            vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<cr>", {noremap = true})
+            vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<cr>", {noremap = true})
+            vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<cr>", {noremap = true})
+            -- draw a box by pressing "f" with visual selection
+            vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<cr>", {noremap = true})
+        else
+            vim.cmd[[setlocal ve=]]
+            vim.cmd[[mapclear <buffer>]]
+            vim.b.venn_enabled = nil
+        end
+    end
+    -- toggle keymappings for venn using <leader>v
+    vim.api.nvim_set_keymap('n', '<leader>v', ":lua toggle_venn()<cr>", { noremap = true})
+EOF
+
+" discord rich presence
+let g:presence_auto_update          = 1
+let g:presence_neovim_image_text    = 'The One True Text Editor'
+let g:presence_main_image           = 'neovim'
+let g:presence_client_id            = '793271441293967371'
+let g:presence_debounce_timeout     = 10
+let g:presence_enable_line_number   = 0
+let g:presence_blacklist            = []
+let g:presence_buttons              = 1
+let g:presence_editing_text         = 'Editing %s'
+let g:presence_file_explorer_text   = 'Browsing %s'
+let g:presence_git_commit_text      = 'Committing changes'
+let g:presence_plugin_manager_text  = 'Managing plugins'
+let g:presence_reading_text         = 'Reading %s'
+let g:presence_workspace_text       = 'Working on %s'
+let g:presence_line_number_text     = 'Line %s out of %s'
+
+" " Vim rainbow
 let g:rainbow_active = 1
 
 let g:rainbow_load_separately = [
@@ -165,6 +260,7 @@ let g:floaterm_width = 0.9
 let g:floaterm_height = 0.9
 
 " Color scheme settings
+let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 set background=dark
 set termguicolors
@@ -193,6 +289,7 @@ nnoremap <C-p> :GFiles<CR>
 nnoremap <C-g> :Ag<CR>
 nnoremap <leader>f :FZF<CR>
 nnoremap <leader><C-g> :Commits<CR>
+nnoremap <silent><C-s> :NV<CR>
 
 nnoremap <leader>1 :BufferLineGoToBuffer 1<CR>
 nnoremap <leader>2 :BufferLineGoToBuffer 2<CR>
@@ -336,4 +433,3 @@ augroup CLEAN
     autocmd!
     autocmd BufWritePre * :call TrimWhitespace()
 augroup END
-
