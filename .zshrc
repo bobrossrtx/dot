@@ -218,7 +218,6 @@ SAVEHIST=100000
 WORDCHARS='`~!@#$%^&*()-_=+[{]}\|;:",<.>/?'"'"
 watch=(notme)
 
-
 ## Terminal Emulator
 # get terminal emulator
 TERM_EMULATOR=$(ps -h -o comm -p $PPID)

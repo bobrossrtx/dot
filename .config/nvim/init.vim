@@ -1,5 +1,8 @@
 lua require 'bobrossrtx'
 source $HOME/.config/nvim/plug-config/start-screen.vim
+source $HOME/.config/nvim/autoload/plug.vim
+
+au BufRead,BufNewFile *.fountain set filetype=fountain
 
 " General Settings
 set encoding=UTF-8 nobackup nowritebackup nocursorline
@@ -16,7 +19,6 @@ set ruler
 set noerrorbells
 set noswapfile
 set undodir=~/.vim/undodir undofile
-set ttyfast
 set lazyredraw
 set nohlsearch
 set incsearch
