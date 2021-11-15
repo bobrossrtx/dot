@@ -36,3 +36,5 @@ g() {
 function mcd() {
   mkdir -p "$1" && cd "$1";
 }
+
+tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }

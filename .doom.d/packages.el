@@ -60,3 +60,7 @@
 
 (package! org-download)
 (package! org-super-agenda)
+
+(package! pdf-tools)
+
+(package! elfeed-goodies)

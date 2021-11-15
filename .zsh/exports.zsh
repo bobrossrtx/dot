@@ -1,4 +1,7 @@
 # Path
+PATH=$HOME/tools/zig:$PATH
+PATH=$HOME/tools/zls:$PATH
+PATH=$HOME/tools/nushell:$PATH
 PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.local/bin/color-scripts:$PATH
@@ -7,6 +10,8 @@ PATH=$HOME/.config/composer/vendor/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.bin:$PATH
 PATH=$HOME/.emacs.d/bin:$PATH
+PATH=$HOME/.scripts:$PATH
+PATH=$HOME/.nimble/bin:$PATH
 
 export PATH
 

@@ -193,6 +193,9 @@ alias ccat="highlight -O ansi"
 alias grep="$(whence -p grep) --color=auto"
 alias egrep="$(whence -p egrep) --color=auto"
 
+# Projects
+alias tin="z tin"
+
 ## Generic options
 setopt autocd
 setopt append_history
@@ -231,4 +234,12 @@ source $HOME/.cargo/env
 
 # opam configuration
 test -r /home/owen/.opam/opam-init/init.zsh && . /home/owen/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# Prompt
 eval "$(starship init zsh)"
+
+# autoload -Uz vcs_info
+# precmd() { vcs_info }
+# zstyle ':vcs_info:git:*' formats ' (git)-[%F{83}%b%f]'
+# setopt PROMPT_SUBST
+# PROMPT=$'%B%F{51}%n%f %b${PWD/#$HOME/~}${vcs_info_msg_0_}\n%F{81} '
