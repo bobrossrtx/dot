@@ -1,0 +1,38 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/owen/org/agenda.org
+
+
+* TODO [IMPORTANT] Read "Programming from the ground up".
+SCHEDULED: <2021-11-05 Fri>
+:PROPERTIES:
+:ARCHIVE_TIME: 2021-10-28 Thu 03:46
+:ARCHIVE_FILE: ~/org/agenda.org
+:ARCHIVE_OLPATH: Task list
+:ARCHIVE_CATEGORY: agenda
+:ARCHIVE_TODO: TODO
+:END:
+
+
+* Cool tricks
+:PROPERTIES:
+:ARCHIVE_TIME: 2021-10-28 Thu 03:46
+:ARCHIVE_FILE: ~/org/agenda.org
+:ARCHIVE_CATEGORY: agenda
+:END:
+** Org-mode
++ SPC-m-t-t to mark as TODO.
++ ENTER to toggle TODO and DONE.
++ CTRL+ENTER to add another list item.
++ SPC-m-d-s opens the org-schedule.
+   + You can use SHFT+ARROWS to change date of scheduled time.
+
+* TODO [IMPORTANT] Continue working on X86-64_assembly.
+:PROPERTIES:
+:ARCHIVE_TIME: 2021-10-28 Thu 03:46
+:ARCHIVE_FILE: ~/org/agenda.org
+:ARCHIVE_OLPATH: Task list
+:ARCHIVE_CATEGORY: agenda
+:ARCHIVE_TODO: TODO
+:END:

@@ -1,0 +1,14 @@
+#+TITLE: Owen's Org Agenda File
+
+* Task list
+** TODO [IMPORTANT] Continue working on X86-64_assembly.
+** TODO [IMPORTANT] Read "Programming from the ground up".
+SCHEDULED: <2021-11-05 Fri>
+
+* Cool tricks
+** Org-mode
++ SPC-m-t-t to mark as TODO.
++ ENTER to toggle TODO and DONE.
++ CTRL+ENTER to add another list item.
++ SPC-m-d-s opens the org-schedule.
+   + You can use SHFT+ARROWS to change date of scheduled time.
